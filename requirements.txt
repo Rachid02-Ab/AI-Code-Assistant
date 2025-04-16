@@ -1,7 +1,8 @@
 langchain==0.3.23
 pandas
 chromadb
-langchain_community
-sentence-transformers
-streamlit  # pour l'interface
+langchain-community==0.0.29
+sentence-transformers==2.6.1
+faiss-cpu==1.7.4
+streamlit==1.32.0
 requests  # pour les requêtes HTTP

@@ -4,41 +4,35 @@ import os
 
 def create_vectorstore(docs):
     if not docs:
-        raise ValueError("La liste de documents est vide. Impossible de créer un vectorstore.")
-
-    # Configuration des embeddings
+        raise ValueError("La liste de documents est vide.")
+    
     try:
+        # Option 1: Essayer avec le modèle léger par défaut
         embedding_model = HuggingFaceEmbeddings(
-            model_name="sentence-transformers/all-MiniLM-L6-v2",
+            model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
             model_kwargs={'device': 'cpu'},
-            encode_kwargs={'normalize_embeddings': False}
+            encode_kwargs={'normalize_embeddings': True}
         )
         
-        # Création du vectorstore FAISS
-        vectorstore = FAISS.from_documents(
-            documents=docs,
-            embedding=embedding_model
-        )
-        
-        return vectorstore
-        
+        return FAISS.from_documents(docs, embedding_model)
+    
     except Exception as e:
-        # Solution alternative avec SentenceTransformer directement
+        # Option 2: Fallback plus robuste
         try:
             from sentence_transformers import SentenceTransformer
-            model = SentenceTransformer('all-MiniLM-L6-v2')
+            model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
             embeddings = model.encode([doc.page_content for doc in docs])
             
-            # Création du FAISS avec les embeddings pré-calculés
-            vectorstore = FAISS.from_embeddings(
-                text_embeddings=list(zip([doc.page_content for doc in docs], embeddings)),
-                embedding=model  # ou utiliser une fonction lambda si nécessaire
+            return FAISS.from_embeddings(
+                text_embeddings=zip([doc.page_content for doc in docs], embeddings),
+                embedding=model
             )
-            return vectorstore
-            
         except Exception as alt_e:
             raise RuntimeError(
-                f"Échec du chargement du modèle. "
-                f"Erreur originale: {str(e)}\n"
-                f"Erreur alternative: {str(alt_e)}"
+                f"Échec de création du vectorstore.\n"
+                f"Veuillez vérifier:\n"
+                f"1. Votre connexion Internet\n"
+                f"2. Les versions des bibliothèques\n"
+                f"3. La mémoire disponible\n\n"
+                f"Erreur originale: {str(e)}"
             )
