@@ -1,6 +1,7 @@
 langchain==0.3.23
 pandas
 chromadb
+faiss-cpu
 langchain_community
 sentence-transformers
 streamlit  # pour l'interface
