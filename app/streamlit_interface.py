@@ -1,10 +1,15 @@
 import streamlit as st
+import sys  
+from pathlib import Path  
+
+sys.path.append(str(Path(__file__).parent.parent))  
 from utils.loader import load_dataset
 from utils.splitter import split_documents
 from utils.embeddings import create_vectorstore
 from models.mistral_inference import get_mistral_response
 from app.rag_pipeline import build_rag_chain
 import re
+
 
 # Titre de l'application Streamlit
 st.title("AI Coder - Chatbot pour Code Python")
