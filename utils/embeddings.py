@@ -1,23 +1,17 @@
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 import os
-from pathlib import Path
 
 def create_vectorstore(docs):
     if not docs:
         raise ValueError("La liste de documents est vide. Impossible de créer un vectorstore.")
 
-    # Chemin local pour le cache du modèle
-    model_cache_path = Path("./model_cache")
-    model_cache_path.mkdir(exist_ok=True)
-    
-    # Configuration des embeddings avec gestion d'erreur
+    # Configuration des embeddings
     try:
         embedding_model = HuggingFaceEmbeddings(
             model_name="sentence-transformers/all-MiniLM-L6-v2",
             model_kwargs={'device': 'cpu'},
-            encode_kwargs={'normalize_embeddings': False},
-            cache_folder=model_cache_path
+            encode_kwargs={'normalize_embeddings': False}
         )
         
         # Création du vectorstore FAISS
@@ -29,26 +23,22 @@ def create_vectorstore(docs):
         return vectorstore
         
     except Exception as e:
-        # Si échec, essayer en mode local seulement
+        # Solution alternative avec SentenceTransformer directement
         try:
-            print("Tentative en mode local seulement...")
-            embedding_model = HuggingFaceEmbeddings(
-                model_name=str(model_cache_path/"sentence-transformers_all-MiniLM-L6-v2"),
-                model_kwargs={'device': 'cpu'},
-                encode_kwargs={'normalize_embeddings': False},
-                local_files_only=True
+            from sentence_transformers import SentenceTransformer
+            model = SentenceTransformer('all-MiniLM-L6-v2')
+            embeddings = model.encode([doc.page_content for doc in docs])
+            
+            # Création du FAISS avec les embeddings pré-calculés
+            vectorstore = FAISS.from_embeddings(
+                text_embeddings=list(zip([doc.page_content for doc in docs], embeddings)),
+                embedding=model  # ou utiliser une fonction lambda si nécessaire
             )
+            return vectorstore
             
-            return FAISS.from_documents(documents=docs, embedding=embedding_model)
-            
-        except Exception as local_error:
+        except Exception as alt_e:
             raise RuntimeError(
                 f"Échec du chargement du modèle. "
-                f"Veuillez télécharger manuellement le modèle avec:\n"
-                f"```python\n"
-                f"from sentence_transformers import SentenceTransformer\n"
-                f"model = SentenceTransformer('all-MiniLM-L6-v2', cache_folder='./model_cache')\n"
-                f"```\n"
                 f"Erreur originale: {str(e)}\n"
-                f"Erreur locale: {str(local_error)}"
+                f"Erreur alternative: {str(alt_e)}"
             )
