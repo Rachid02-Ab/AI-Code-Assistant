@@ -1,0 +1,7 @@
+langchain==0.3.23
+pandas
+chromadb
+langchain_community
+sentence-transformers
+streamlit  # pour l'interface
+requests  # pour les requêtes HTTP
