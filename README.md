@@ -1,6 +1,7 @@
 # 🐍 AI Coder - Chatbot d'assistance Python
 
 ![Description de l'image](images/github%20README.png)
+![Description de l'image](images/autre%20image.png)
 
 Un chatbot intelligent utilisant la technologie RAG (Retrieval-Augmented Generation) et llm Mistral pour répondre aux questions de programmation Python.
 
