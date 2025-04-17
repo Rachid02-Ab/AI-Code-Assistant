@@ -25,11 +25,11 @@ cd AI Coder
 Le chatbot utilise un fichier JSON (`glaive_dataset.json`)  contenant des centaines de questions/réponses sur le code Python, comme **source de connaissance externe**, ces données sont disponibles sur **HuggingFace dataset**.
 
 ### 2. Technologies utilisées
-**LangChain** – gestion du pipeline RAG
-**FAISS** – Vector database
-**HuggingFace Embeddings** – conversion texte → vecteur
-**Mistral**  – LLM utilisé dans ce projet
-**Streamlit** – interface utilisateur
+- **LangChain** – gestion du pipeline RAG
+- **FAISS** – Vector database
+- **HuggingFace Embeddings** – conversion texte → vecteur
+- **Mistral**  – LLM utilisé dans ce projet
+- **Streamlit** – interface utilisateur
 
 ## 🔁 CI/CD avec GitHub Actions
 
