@@ -3,7 +3,7 @@
 ![Description de l'image](images/github%20README.png)
 ![Description de l'image](images/autre%20image.png)
 
-AI Coder est un assistant intelligent (**copilot**) capable de répondre à des questions techniques sur le langage Python. Il utilise une architecture RAG (Retrieval-Augmented Generation) combinée à un modèle de langage (**Mistral LLM**) pour fournir des réponses précises et contextualisées.
+AI Coder est un assistant intelligent (**copilot**) capable de répondre à des questions techniques sur le langage Python. Il utilise une architecture **RAG (Retrieval-Augmented Generation)** combinée à un modèle de langage (**Mistral LLM**) pour fournir des réponses précises et contextualisées.
 
 ## 🛠️ Installation
 
@@ -25,11 +25,11 @@ cd AI Coder
 Le chatbot utilise un fichier JSON (`glaive_dataset.json`)  contenant des centaines de questions/réponses sur le code Python, comme **source de connaissance externe**, ces données sont disponibles sur **HuggingFace dataset**.
 
 ### 2. Technologies utilisées
-**LangChain** – gestion du pipeline RAG
-**FAISS** – Vector database
-**HuggingFace Embeddings** – conversion texte → vecteur
-**Mistral**  – LLM utilisé dans ce projet
-**Streamlit** – interface utilisateur
+- **LangChain** – gestion du pipeline RAG
+- **FAISS** – Vector database
+- **HuggingFace Embeddings** – conversion texte → vecteur
+- **Mistral**  – LLM utilisé dans ce projet
+- **Streamlit** – interface utilisateur
 
 ## 🔁 CI/CD avec GitHub Actions
 
