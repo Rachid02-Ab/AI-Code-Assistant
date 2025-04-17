@@ -1,0 +1,39 @@
+name: 🧪 AI Coder - CI Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  full-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 📦 Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flake8 black
+
+      - name: 🧹 Lint avec flake8
+        run: flake8 --max-line-length=88 .
+
+      - name: 🎨 Vérification de formatage avec black
+        run: black --check .
+
+      - name: ✅ Test Streamlit (vérifie que l'app démarre)
+        run: |
+          echo "🚀 Lancement de l'app Streamlit en arrière-plan"
+          streamlit run app/streamlit_interface.py --server.headless true &
+          sleep 10
+          echo "🔍 Vérification de la disponibilité sur le port 8501"
+          curl -s http://localhost:8501 || (echo "❌ L'app Streamlit ne s'est pas lancée" && exit 1)
