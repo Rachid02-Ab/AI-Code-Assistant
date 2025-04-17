@@ -12,7 +12,7 @@ import re
 
 
 # Titre de l'application Streamlit
-st.title("AI Coder - Chatbot pour Code Python")
+st.title("AI Coder - Copilot pour Code Python")
 
 # Introduction améliorée
 st.markdown("""
