@@ -3,7 +3,7 @@
 ![Description de l'image](images/github%20README.png)
 ![Description de l'image](images/autre%20image.png)
 
-AI Coder est un assistant intelligent (**copilot**) capable de répondre à des questions techniques sur le langage Python. Il utilise une architecture RAG (Retrieval-Augmented Generation) combinée à un modèle de langage (**Mistral LLM**) pour fournir des réponses précises et contextualisées.
+AI Coder est un assistant intelligent (**copilot**) capable de répondre à des questions techniques sur le langage Python. Il utilise une architecture **RAG (Retrieval-Augmented Generation)** combinée à un modèle de langage (**Mistral LLM**) pour fournir des réponses précises et contextualisées.
 
 ## 🛠️ Installation
 
